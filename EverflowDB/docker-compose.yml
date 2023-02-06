@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  db:
+      container_name: db
+      image: mysql
+      ports:
+        - "3306:3306"
+      restart: always
+      environment:
+        MYSQL_ROOT_PASSWORD: MYSQL_ROOT_PASSWORD
+        MYSQL_DATABASE: EverflowDB
+        MYSQL_USER: MYSQL_USER
+        MYSQL_PASSWORD: MYSQL_PASSWORD
+      volumes:
+        - ./mysql:/var/lib/mysql
+        - ./init:/docker-entrypoint-initdb.d
+
+volumes:
+  mysql:
+
