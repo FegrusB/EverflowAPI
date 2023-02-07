@@ -1,8 +1,8 @@
 version: '3.8'
 
 services:
-  db:
-      container_name: db
+  EverflowDB:
+      container_name: EverflowDB
       image: mysql
       ports:
         - "3306:3306"

@@ -2,32 +2,32 @@ SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
 
-CREATE TABLE 'spids' (
-    '_id' int(11) NOT NULL AUTO_INCREMENT,
-    'spid' TINYTEXT,
-    'MeterSerial' TINYTEXT,
-    'MeterManufacturer' TINYTEXT,
-    'MeterSewerageSize' SMALLINT(),
-    'MeterWaterSize' SMALLINT(),
-    'YearlyVolumeEstimate' FLOAT(),
-    'MeterType' BOOlEAN,
-    'ReturnToSewer' SMALLINT(),
-    'GeneralSPID' TINYTEXT,
-    'NumberOfReadDigits' TINYINT,
-    'MeterLocationDescription' TEXT,
-    'MeterReadFrequency' TINYINT,
-    PRIMARY KEY ('_id')
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+CREATE TABLE spids (
+    _id int NOT NULL AUTO_INCREMENT,
+    spid TEXT,
+    MeterSerial text,
+    MeterManufacturer TEXT,
+    MeterSewerageSize SMALLINT(255),
+    MeterWaterSize SMALLINT(255),
+    YearlyVolumeEstimate FLOAT(53),
+    MeterType BOOlEAN,
+    ReturnToSewer SMALLINT(255),
+    GeneralSPID TEXT,
+    NumberOfReadDigits INT,
+    MeterLocationDescription TEXT,
+    MeterReadFrequency INT,
+    PRIMARY KEY (_id)
+); 
 
-CREATE TABLE 'meterReadings' (
-    '_id' int() NOT NULL AUTO_INCREMENT,
-    'MeterSerial' TINYTEXT,
-    'ReadingDate' SMALLDATETIME,
-    'Reading' int,
-    'UsedForEstimate'BOOlEAN,
-    'ManualReading' BOOlEAN,
-    'Rollover' BOOlEAN,
-    'ReadType' CHAR,
-    'GeneralSPID' TINYTEXT,
-    PRIMARY KEY ('_id')
-)
+CREATE TABLE meterReadings (
+    _id int NOT NULL AUTO_INCREMENT,
+    MeterSerial TEXT,
+    ReadingDate DATETIME(0),
+    Reading INT,
+    UsedForEstimate BIT(1),
+    ManualReading Bit(1),
+    Rollover BIT(1),
+    ReadType CHAR,
+    GeneralSPID TEXT,
+    PRIMARY KEY (_id)
+);
