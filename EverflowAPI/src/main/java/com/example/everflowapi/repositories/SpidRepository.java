@@ -1,12 +1,12 @@
-package com.example.everflowapi;
+package com.example.everflowapi.repositories;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.example.everflowapi.models.Spid;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.multipart.MultipartFile;
-import org.yaml.snakeyaml.events.Event;
 
 @Repository
-public interface SpidRepository extends CrudRepository<Spid,Integer> {
+public interface SpidRepository extends CrudRepository<Spid,Long> {
     void save(MultipartFile file);
 }

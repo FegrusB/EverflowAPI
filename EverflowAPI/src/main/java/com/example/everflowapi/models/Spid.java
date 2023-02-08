@@ -1,4 +1,4 @@
-package com.example.everflowapi;
+package com.example.everflowapi.models;
 
 
 import jakarta.persistence.*;

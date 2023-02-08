@@ -21,6 +21,7 @@ CREATE TABLE `spids` (
 
 CREATE TABLE `meterReadings` (
     `_id` int NOT NULL AUTO_INCREMENT,
+    `spid` TEXT,
     `MeterSerial` TEXT,
     `ReadingDate` DATETIME(0),
     `Reading` INT,
