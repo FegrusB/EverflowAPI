@@ -1,11 +1,7 @@
 package com.example.everflowapi;
 
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
-import jakarta.persistence.Id;
-
+import jakarta.persistence.*;
 
 
 @Entity
@@ -13,6 +9,7 @@ import jakarta.persistence.Id;
 public class Spid {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "_id")
     private long id;
 
@@ -52,6 +49,25 @@ public class Spid {
     @Column(name = "MeterReadFrequency")
     private int meterReadFrequency;
 
+    public Spid(String spid, String meterSerial, String meterManufacturer, int meterSewageSize, int meterWaterSize, float yearlyVolumeEstimate, boolean meterType,
+                int returnToSewer, String generalSPID, int numberOfReadDigits, String meterLocationDescription, int meterReadFrequency) {
+        this.spid = spid;
+        this.meterSerial = meterSerial;
+        this.meterManufacturer = meterManufacturer;
+        this.meterSewageSize = meterSewageSize;
+        this.meterWaterSize = meterWaterSize;
+        this.yearlyVolumeEstimate = yearlyVolumeEstimate;
+        this.meterType = meterType;
+        this.returnToSewer = returnToSewer;
+        this.generalSPID = generalSPID;
+        this.numberOfReadDigits = numberOfReadDigits;
+        this.meterLocationDescription = meterLocationDescription;
+        this.meterReadFrequency = meterReadFrequency;
+    }
+
+    public Spid() {
+
+    }
 
     public long getId() {
         return id;
