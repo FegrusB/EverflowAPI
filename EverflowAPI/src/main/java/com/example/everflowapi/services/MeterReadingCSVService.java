@@ -16,13 +16,14 @@ public class MeterReadingCSVService implements CSVServiceable {
     @Autowired
     MeterReadingRepository repository;
 
-    public void save(MultipartFile file){
+    public int[] save(MultipartFile file, CSVHelper.CSVResult result){
         try{
-            List<MeterReading> meterReadings = CSVHelper.csvToMeterReading(file.getInputStream());
-            repository.saveAll(meterReadings);
+            result = CSVHelper.csvToMeterReading(file.getInputStream());
+            repository.saveAll(result.getData());
         } catch (IOException e){
             throw new RuntimeException("Failed to store data" + e.getMessage());
         }
+        return new int[] {result.getNumSuccess(),result.getNumMissed()};
     }
     public List<MeterReading> getAllMeterReadings(){
         return (List<MeterReading>) repository.findAll();

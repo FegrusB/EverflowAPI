@@ -7,23 +7,38 @@ import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 import org.springframework.web.multipart.MultipartFile;
-
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 
 public class CSVHelper {
 
-    public static String TYPE = "text/csv";
+    public static final String TYPE = "text/csv";
 
-    public static boolean hasCSVFormat(MultipartFile file){
-        if(!TYPE.equals(file.getContentType())){return false;}
-        return true;
+    public static class CSVResult {
+
+        private final ArrayList data;
+        private final int numMissed;
+        private final int numSuccess;
+        public CSVResult(ArrayList data, int numMissed, int numSuccess){
+            this.data = data;
+            this.numMissed = numMissed;
+            this.numSuccess = numSuccess;
+        }
+        public ArrayList getData() {return data;}
+        public int getNumMissed() {return numMissed;}
+        public int getNumSuccess() {return numSuccess;}
     }
 
-    public static ArrayList<Spid> csvToSpid(InputStream inputStream){
+    public static boolean hasCSVFormat(MultipartFile file){
+        return TYPE.equals(file.getContentType());
+    }
 
-        try (BufferedReader fileReader = new BufferedReader(new InputStreamReader(inputStream,"UTF-8"))) {
+    public static CSVResult csvToSpid(InputStream inputStream){
+        int numMissed = 0;
+        int numSuccess = 0;
+        try (BufferedReader fileReader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8))) {
 
             ArrayList<Spid> spids = new ArrayList<>();
             CSVParser csvParser = new CSVParser(fileReader, CSVFormat.DEFAULT.withFirstRecordAsHeader().withIgnoreHeaderCase().withTrim().withAllowMissingColumnNames(true));
@@ -32,23 +47,25 @@ public class CSVHelper {
             for(CSVRecord record: csvRecords){
                 try {
                     Spid spid = new Spid(record.get("SPId"), record.get("MeterSerial"), record.get("MeterManufacturer"), Integer.parseInt(record.get("MeterSewerageSize")),
-                            Integer.parseInt(record.get("MeterWaterSize")), Float.parseFloat(record.get("YearlyVolumeEstimate")), Boolean.parseBoolean(record.get("MeterType")),
+                            Integer.parseInt(record.get("MeterWaterSize")), Float.parseFloat(record.get("YearlyVolumeEstimate")), Integer.parseInt(record.get("MeterType")) != 0,
                             Integer.parseInt(record.get("ReturnToSewer")), record.get("GeneralSPId"), Integer.parseInt(record.get("NumberOfReadDigits")),
                             record.get("MeterLocationDescription"), Integer.parseInt(record.get("MeterReadFrequency")));
 
                     spids.add(spid);
+                    numSuccess++;
                 } catch (Exception e){
-                    CSVController.missedLines ++;
+                    numMissed ++;
                 }
             }
-            return spids;
+            return new CSVResult( spids,numMissed,numSuccess);
         } catch (IOException e) {
             throw new RuntimeException("Error reading file + " + e.getMessage());
         }
     }
-    public static ArrayList<MeterReading> csvToMeterReading(InputStream inputStream){
-
-        try (BufferedReader fileReader = new BufferedReader(new InputStreamReader(inputStream,"UTF-8"))) {
+    public static CSVResult csvToMeterReading(InputStream inputStream){
+        int numMissed = 0;
+        int numSuccess = 0;
+        try (BufferedReader fileReader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8))) {
 
             ArrayList<MeterReading> meterReadings = new ArrayList<>();
             CSVParser csvParser = new CSVParser(fileReader, CSVFormat.DEFAULT.withFirstRecordAsHeader().withIgnoreHeaderCase().withTrim().withAllowMissingColumnNames(true));
@@ -56,16 +73,18 @@ public class CSVHelper {
 
             for(CSVRecord record: csvRecords){
                 try {
-                    MeterReading reading = new MeterReading(record.get("SPId"), record.get("MeterSerial"), Timestamp.valueOf(record.get("ReadingDate")), Integer.parseInt(record.get("Reading")),
-                            Boolean.parseBoolean(record.get("UsedForEstimate")), Boolean.parseBoolean(record.get("ManualReading")), Boolean.parseBoolean(record.get("Rollover")),
-                            record.get("ReadType"), record.get("GeneralSPId"));
+
+
+                    MeterReading reading = new MeterReading(record.get("SPId"), record.get("MeterSerial"), Timestamp.valueOf(record.get("ReadingDate")), Integer.parseInt(record.get("Reading")), Integer.parseInt(record.get("UsedForEstimate")) != 0,
+                            Integer.parseInt(record.get("ManualReading")) != 0, Integer.parseInt(record.get("Rollover")) != 0, record.get("ReadType"), record.get("GeneralSPId"));
 
                     meterReadings.add(reading);
+                    numSuccess++;
                 } catch (Exception e){
-                    CSVController.missedLines ++;
+                    numMissed ++;
                 }
             }
-            return meterReadings;
+            return new CSVResult(meterReadings,numMissed,numSuccess);
         } catch (IOException e) {
             throw new RuntimeException("Error reading file + " + e.getMessage());
         }

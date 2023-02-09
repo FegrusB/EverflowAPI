@@ -1,9 +1,8 @@
 package com.example.everflowapi.models;
 
 import jakarta.persistence.*;
-
+import org.apache.commons.lang3.builder.EqualsBuilder;
 import java.sql.Timestamp;
-import java.util.Objects;
 
 @Entity
 @Table(name = "meterReadings")
@@ -57,6 +56,27 @@ public class MeterReading {
 
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) { return false; }
+        if (obj == this) { return true; }
+        if (obj.getClass() != getClass()) {
+            return false;
+        }
+        MeterReading rhs = (MeterReading) obj;
+        return new EqualsBuilder()
+                .append(spid, rhs.spid)
+                .append(meterSerial, rhs.meterSerial)
+                .append(readingDate, rhs.readingDate)
+                .append(reading,rhs.reading)
+                .append(usedForEstimate,rhs.usedForEstimate)
+                .append(manualReading,rhs.manualReading)
+                .append(rollover,rhs.rollover)
+                .append(readType,rhs.readType)
+                .append(generalSpid,generalSpid)
+                .isEquals();
+    }
+
     public String getSpid() {
         return spid;
     }
@@ -65,9 +85,7 @@ public class MeterReading {
         this.spid = spid;
     }
 
-    public int getId() {
-        return id;
-    }
+    public int getId() {return id;}
 
     public String getMeterSerial() {return meterSerial;}
 

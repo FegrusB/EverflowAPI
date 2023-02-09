@@ -17,7 +17,6 @@ import org.springframework.web.multipart.MultipartFile;
 @RequestMapping("/api/")
 public class CSVController {
 
-    public static int missedLines;
     @Autowired
     SpidCSVService spidCSVService;
 
@@ -26,7 +25,6 @@ public class CSVController {
 
     @PostMapping("/spid/upload")
     public ResponseEntity<ResponseMessage> uploadSpids(@RequestParam("file")MultipartFile file){
-
         return uploadFile(file,spidCSVService);
     }
 
@@ -37,11 +35,11 @@ public class CSVController {
 
     public ResponseEntity<ResponseMessage> uploadFile(@RequestParam("file")MultipartFile file, CSVServiceable CSVService){
         String message;
-        missedLines  = 0;
+        CSVHelper.CSVResult result = null;
         if(CSVHelper.hasCSVFormat(file)){
             try{
-                CSVService.save(file);
-                message = "Uploaded file successfully: " + file.getOriginalFilename() + " with " + missedLines + " missed line(s).";
+                int[] hitMiss = CSVService.save(file,result);
+                message = "Uploaded file successfully: " + file.getOriginalFilename() + " with " + hitMiss[0] + " Successful line(s) and " + hitMiss[1] + " missed line(s)";
                 return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(message));
             } catch (Exception e){
                 message = "Could not upload file: " + file.getOriginalFilename();
