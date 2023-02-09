@@ -2,6 +2,7 @@ package com.example.everflowapi.models;
 
 
 import jakarta.persistence.*;
+import org.apache.commons.lang3.builder.EqualsBuilder;
 
 
 @Entity
@@ -67,6 +68,31 @@ public class Spid {
 
     public Spid() {
 
+    }
+
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) { return false; }
+        if (obj == this) { return true; }
+        if (obj.getClass() != getClass()) {
+            return false;
+        }
+        Spid rhs = (Spid) obj;
+        return new EqualsBuilder()
+                .append(spid, rhs.spid)
+                .append(meterSerial, rhs.meterSerial)
+                .append(meterManufacturer, rhs.meterManufacturer)
+                .append(meterSewageSize,rhs.meterSewageSize)
+                .append(meterWaterSize,rhs.meterWaterSize)
+                .append(yearlyVolumeEstimate,rhs.yearlyVolumeEstimate)
+                .append(meterType,rhs.meterType)
+                .append(returnToSewer,rhs.returnToSewer)
+                .append(generalSPID,rhs.generalSPID)
+                .append(numberOfReadDigits,rhs.numberOfReadDigits)
+                .append(meterLocationDescription,rhs.meterLocationDescription)
+                .append(meterReadFrequency,rhs.meterReadFrequency)
+                .isEquals();
     }
 
     public long getId() {
