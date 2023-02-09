@@ -6,6 +6,7 @@ import java.sql.Timestamp;
 
 @Entity
 @Table(name = "meterReadings")
+@SecondaryTable(name = "spids",foreignKey = @ForeignKey ("spid"))
 public class MeterReading {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
