@@ -4,6 +4,8 @@ package com.example.everflowapi.models;
 import jakarta.persistence.*;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 
+import java.util.List;
+
 
 @Entity
 @Table(name = "spids")
@@ -14,7 +16,11 @@ public class Spid {
     @Column(name = "_id")
     private long id;
 
-    @Column(name = "spid")
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "spid")
+    private List<MeterReading> spidList;
+
+    @Column(unique = true)
     private String spid;
 
     @Column(name = "MeterSerial")

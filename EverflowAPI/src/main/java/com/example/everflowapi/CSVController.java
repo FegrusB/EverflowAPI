@@ -23,8 +23,6 @@ public class CSVController {
     @Autowired
     MeterReadingCSVService meterReadingCSVService;
 
-    @Autowired
-
 
     @PostMapping("/spid/upload")
     public ResponseEntity<ResponseMessage> uploadSpids(@RequestParam("file")MultipartFile file){

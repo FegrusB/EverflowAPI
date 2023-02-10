@@ -2,19 +2,20 @@ package com.example.everflowapi.models;
 
 import jakarta.persistence.*;
 import org.apache.commons.lang3.builder.EqualsBuilder;
+
 import java.sql.Timestamp;
 
 @Entity
 @Table(name = "meterReadings")
-@SecondaryTable(name = "spids",foreignKey = @ForeignKey ("spid"))
 public class MeterReading {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "_id")
     private int id;
 
-    @Column(name = "spid")
-    private String spid;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "spid" ,referencedColumnName = "spid")
+    private Spid spid;
 
     @Column(name = "MeterSerial")
     private String meterSerial;
@@ -40,8 +41,9 @@ public class MeterReading {
     @Column(name = "GeneralSPID")
     private String generalSpid;
 
-    public MeterReading(String spid,String meterSerial, Timestamp readingDate, Integer reading, Boolean usedForEstimate,
+    public MeterReading(Spid spid,String meterSerial, Timestamp readingDate, Integer reading, Boolean usedForEstimate,
                         Boolean manualReading, Boolean rollover, String readType, String generalSpid) {
+
         this.spid = spid;
         this.meterSerial = meterSerial;
         this.readingDate = readingDate;
@@ -66,7 +68,7 @@ public class MeterReading {
         }
         MeterReading rhs = (MeterReading) obj;
         return new EqualsBuilder()
-                .append(spid, rhs.spid)
+                .append(spid.getSpid(), rhs.spid.getSpid())
                 .append(meterSerial, rhs.meterSerial)
                 .append(readingDate, rhs.readingDate)
                 .append(reading,rhs.reading)
@@ -74,16 +76,12 @@ public class MeterReading {
                 .append(manualReading,rhs.manualReading)
                 .append(rollover,rhs.rollover)
                 .append(readType,rhs.readType)
-                .append(generalSpid,generalSpid)
+                .append(generalSpid,rhs.generalSpid)
                 .isEquals();
     }
 
     public String getSpid() {
-        return spid;
-    }
-
-    public void setSpid(String spid) {
-        this.spid = spid;
+        return spid.getSpid();
     }
 
     public int getId() {return id;}
