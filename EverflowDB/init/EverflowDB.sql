@@ -4,7 +4,7 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `spids` (
     `_id` int NOT NULL AUTO_INCREMENT,
-    `spid` varchar(767) NOT NULL,
+    `spid` varchar(20) NOT NULL,
     `MeterSerial` text,
     `MeterManufacturer` TEXT,
     `MeterSewerageSize` SMALLINT(255),
@@ -16,15 +16,13 @@ CREATE TABLE `spids` (
     `NumberOfReadDigits` INT,
     `MeterLocationDescription` TEXT,
     `MeterReadFrequency` INT,
-    
     UNIQUE (`spid`),
     PRIMARY KEY (`_id`)
-    
     ); 
 
 CREATE TABLE `meterReadings` (
     `_id` int NOT NULL AUTO_INCREMENT,
-    `spid` varchar(767) NOT NULL,
+    `spid` varchar(20) NOT NULL,
     `MeterSerial` TEXT,
     `ReadingDate` DATETIME(0),
     `Reading` INT,
