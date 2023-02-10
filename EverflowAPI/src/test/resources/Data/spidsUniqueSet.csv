@@ -1,0 +1,3 @@
+SPId,MeterSerial,MeterManufacturer,MeterSewerageSize,MeterWaterSize,YearlyVolumeEstimate,MeterType,ReturnToSewer,GeneralSPId,NumberOfReadDigits,MeterLocationDescription,MeterReadFrequency
+3006433184W15,93030525,KENTMETERS,22,22,128.705234,0,100,3006438184,4,EXTERNAL CHAMBER GPS 20003 86898. FIRE HYDRANT  LHS OF DRIVE LEADING TO FARM- 20 YDS PAST BIG RD SIGN,3
+3021358035W15,13E640098R,Kent,20,20,2585,0,90,3021018035,6,in verge opp no. 35,3

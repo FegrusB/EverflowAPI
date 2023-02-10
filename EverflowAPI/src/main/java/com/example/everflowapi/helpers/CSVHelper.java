@@ -7,7 +7,6 @@ import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 import org.springframework.web.multipart.MultipartFile;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -56,7 +55,6 @@ public class CSVHelper {
                             Integer.parseInt(record.get("MeterWaterSize")), Float.parseFloat(record.get("YearlyVolumeEstimate")), Integer.parseInt(record.get("MeterType")) != 0,
                             Integer.parseInt(record.get("ReturnToSewer")), record.get("GeneralSPId"), Integer.parseInt(record.get("NumberOfReadDigits")),
                             record.get("MeterLocationDescription"), Integer.parseInt(record.get("MeterReadFrequency")));
-
                     spids.add(spid);
                     numSuccess++;
                 } catch (Exception e){
@@ -79,11 +77,8 @@ public class CSVHelper {
 
             for(CSVRecord record: csvRecords){
                 try {
-
-
                     MeterReading reading = new MeterReading(repository.findBySpid(record.get("SPId")) , record.get("MeterSerial"), Timestamp.valueOf(record.get("ReadingDate")), Integer.parseInt(record.get("Reading")), Integer.parseInt(record.get("UsedForEstimate")) != 0,
                             Integer.parseInt(record.get("ManualReading")) != 0, Integer.parseInt(record.get("Rollover")) != 0, record.get("ReadType"), record.get("GeneralSPId"));
-
                     meterReadings.add(reading);
                     numSuccess++;
                 } catch (Exception e){
