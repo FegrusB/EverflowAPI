@@ -1,7 +1,5 @@
 package com.example.everflowapi;
 
-
-import com.example.everflowapi.helpers.CSVHelper;
 import com.example.everflowapi.services.MeterReadingCSVService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -22,9 +20,8 @@ public class MeterReadingCSVServiceTests {
 
         InputStream in = getClass().getResourceAsStream("/Data/perfectReadings.csv");
         MockMultipartFile file = new MockMultipartFile("file",in);
-        CSVHelper.CSVResult result = null;
 
-        int[] ints = service.save(file,result);
+        int[] ints = service.save(file);
 
         Assertions.assertEquals(9,ints[0]);
         Assertions.assertEquals(0,ints[1]);
@@ -35,9 +32,8 @@ public class MeterReadingCSVServiceTests {
 
         InputStream in = getClass().getResourceAsStream("/Data/test1.csv");
         MockMultipartFile file = new MockMultipartFile("file",in);
-        CSVHelper.CSVResult result = null;
 
-        int[] ints = service.save(file,result);
+        int[] ints = service.save(file);
 
         Assertions.assertEquals(9,ints[0]);
         Assertions.assertEquals(1,ints[1]);

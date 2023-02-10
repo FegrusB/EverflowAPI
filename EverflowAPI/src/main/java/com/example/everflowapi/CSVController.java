@@ -36,10 +36,9 @@ public class CSVController {
 
     public ResponseEntity<ResponseMessage> uploadFile(@RequestParam("file")MultipartFile file, CSVServiceable CSVService){
         String message;
-        CSVHelper.CSVResult result = null;
         if(CSVHelper.hasCSVFormat(file)){
             try{
-                int[] hitMiss = CSVService.save(file,result);
+                int[] hitMiss = CSVService.save(file);
                 message = "Uploaded file successfully: " + file.getOriginalFilename() + " with " + hitMiss[0] + " Successful line(s) and " + hitMiss[1] + " missed line(s)";
                 return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(message));
             } catch (Exception e){

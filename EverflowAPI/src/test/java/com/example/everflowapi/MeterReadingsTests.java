@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -27,7 +26,7 @@ public class MeterReadingsTests {
         InputStream in = getClass().getResourceAsStream("/Data/test1.csv");
         BufferedReader reader = new BufferedReader(new InputStreamReader(in));
 
-        CSVHelper.CSVResult result = CSVHelper.csvToMeterReading(in,repository);
+        CSVHelper.CSVResult<MeterReading> result = CSVHelper.csvToMeterReading(in,repository);
 
         Assertions.assertTrue(sampleReading.equals(result.getData().get(0)));
         Assertions.assertEquals(10,result.getNumSuccess());
@@ -43,7 +42,7 @@ public class MeterReadingsTests {
         InputStream in = getClass().getResourceAsStream("/Data/meter_readings - meter_readings.csv");
         BufferedReader reader = new BufferedReader(new InputStreamReader(in));
 
-        CSVHelper.CSVResult result = CSVHelper.csvToMeterReading(in,repository);
+        CSVHelper.CSVResult<MeterReading> result = CSVHelper.csvToMeterReading(in,repository);
 
         Assertions.assertTrue(sampleReading.equals(result.getData().get(157)));
         Assertions.assertEquals(158,result.getNumSuccess());

@@ -18,12 +18,16 @@ public class MeterReadingCSVService implements CSVServiceable {
     @Autowired
     SpidRepository spidRepository;
 
-    public int[] save(MultipartFile file, CSVHelper.CSVResult result){
+    public int[] save(MultipartFile file){
+
+        CSVHelper.CSVResult<MeterReading> result;
+
         try{
+
             result = CSVHelper.csvToMeterReading(file.getInputStream(), spidRepository);
 
-            for (Object reading: result.getData()) {
-                try {repository.save((MeterReading) reading);
+            for (MeterReading reading: result.getData()) {
+                try {repository.save(reading);
                 } catch (Exception e){result.addFailure();}
             }
 

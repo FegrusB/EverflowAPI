@@ -20,17 +20,17 @@ public class CSVHelper {
 
     public static final String TYPE = "text/csv";
 
-    public static class CSVResult {
+    public static class CSVResult<T> {
 
-        private final ArrayList data;
+        private final ArrayList<T> data;
         private int numMissed;
         private int numSuccess;
-        public CSVResult(ArrayList data, int numMissed, int numSuccess){
+        public CSVResult(ArrayList<T> data, int numMissed, int numSuccess){
             this.data = data;
             this.numMissed = numMissed;
             this.numSuccess = numSuccess;
         }
-        public ArrayList getData() {return data;}
+        public ArrayList<T> getData() {return data;}
         public int getNumMissed() {return numMissed;}
         public int getNumSuccess() {return numSuccess;}
         public void addFailure(){numMissed++;numSuccess--;}
@@ -40,7 +40,7 @@ public class CSVHelper {
         return TYPE.equals(file.getContentType());
     }
 
-    public static CSVResult csvToSpid(InputStream inputStream){
+    public static CSVResult<Spid> csvToSpid(InputStream inputStream){
         int numMissed = 0;
         int numSuccess = 0;
         try (BufferedReader fileReader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8))) {
@@ -61,12 +61,12 @@ public class CSVHelper {
                     numMissed ++;
                 }
             }
-            return new CSVResult( spids,numMissed,numSuccess);
+            return new CSVResult<>(spids, numMissed, numSuccess);
         } catch (IOException e) {
             throw new RuntimeException("Error reading file + " + e.getMessage());
         }
     }
-    public static CSVResult csvToMeterReading(InputStream inputStream, SpidRepository repository){
+    public static CSVResult<MeterReading> csvToMeterReading(InputStream inputStream, SpidRepository repository){
         int numMissed = 0;
         int numSuccess = 0;
         try (BufferedReader fileReader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8))) {
@@ -86,7 +86,7 @@ public class CSVHelper {
                     numMissed ++;
                 }
             }
-            return new CSVResult(meterReadings,numMissed,numSuccess);
+            return new CSVResult<>(meterReadings, numMissed, numSuccess);
         } catch (IOException e) {
             throw new RuntimeException("Error reading file + " + e.getMessage());
         }

@@ -14,13 +14,14 @@ public class SpidCSVService implements CSVServiceable {
     @Autowired
     SpidRepository repository;
 
-    CSVHelper.CSVResult result;
+    public int[] save(MultipartFile file){
 
-    public int[] save(MultipartFile file,CSVHelper.CSVResult result){
+        CSVHelper.CSVResult<Spid> result;
+
         try{
             result = CSVHelper.csvToSpid(file.getInputStream());
-            for (Object reading: result.getData()) {
-                try {repository.save((Spid) reading);
+            for (Spid reading: result.getData()) {
+                try {repository.save(reading);
                 } catch (Exception e){result.addFailure();}
             }
         } catch (IOException e){

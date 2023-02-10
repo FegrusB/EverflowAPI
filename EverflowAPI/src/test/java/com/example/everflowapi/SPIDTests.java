@@ -22,7 +22,7 @@ public class SPIDTests {
         InputStream in = getClass().getResourceAsStream("/Data/spids - spids.csv");
         BufferedReader reader = new BufferedReader(new InputStreamReader(in));
 
-        CSVHelper.CSVResult result = CSVHelper.csvToSpid(in);
+        CSVHelper.CSVResult<Spid> result = CSVHelper.csvToSpid(in);
 
         Assertions.assertTrue(sampleSPID.equals(result.getData().get(0)));
         Assertions.assertEquals(11,result.getNumSuccess());
@@ -38,7 +38,7 @@ public class SPIDTests {
         InputStream in = getClass().getResourceAsStream("/Data/spidsImperfectSet.CSV");
         BufferedReader reader = new BufferedReader(new InputStreamReader(in));
 
-        CSVHelper.CSVResult result = CSVHelper.csvToSpid(in);
+        CSVHelper.CSVResult<Spid> result = CSVHelper.csvToSpid(in);
 
         Assertions.assertTrue(sampleSPID.equals(result.getData().get(10)));
         Assertions.assertEquals(11,result.getNumSuccess());

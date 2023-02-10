@@ -1,6 +1,5 @@
 package com.example.everflowapi;
 
-import com.example.everflowapi.helpers.CSVHelper;
 import com.example.everflowapi.services.SpidCSVService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -22,9 +21,8 @@ public class SpidCSVServiceTests {
 
         InputStream in = getClass().getResourceAsStream("/Data/spids - spids.csv");
         MockMultipartFile file = new MockMultipartFile("file",in);
-        CSVHelper.CSVResult result = null;
 
-        int[] ints = service.save(file,result);
+        int[] ints = service.save(file);
 
         Assertions.assertEquals(0,ints[0]);
         Assertions.assertEquals(11,ints[1]);
@@ -35,9 +33,8 @@ public class SpidCSVServiceTests {
 
         InputStream in = getClass().getResourceAsStream("/Data/spidsUniqueSet.csv");
         MockMultipartFile file = new MockMultipartFile("file",in);
-        CSVHelper.CSVResult result = null;
 
-        int[] ints = service.save(file,result);
+        int[] ints = service.save(file);
 
         Assertions.assertEquals(2,ints[0]);
         Assertions.assertEquals(0,ints[1]);
