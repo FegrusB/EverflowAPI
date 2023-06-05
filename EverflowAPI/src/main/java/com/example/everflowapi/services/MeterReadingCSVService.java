@@ -12,11 +12,14 @@ import java.io.IOException;
 @Service
 public class MeterReadingCSVService implements CSVServiceable {
 
-    @Autowired
     MeterReadingRepository repository;
+    SpidRepository spidRepository;
 
     @Autowired
-    SpidRepository spidRepository;
+    public MeterReadingCSVService(MeterReadingRepository meterReadingRepository, SpidRepository spidRepository){
+        this.repository = meterReadingRepository;
+        this.spidRepository = spidRepository;
+    }
 
     public int[] save(MultipartFile file){
 

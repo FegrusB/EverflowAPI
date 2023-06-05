@@ -11,8 +11,12 @@ import java.io.IOException;
 @Service
 public class SpidCSVService implements CSVServiceable {
 
-    @Autowired
     SpidRepository repository;
+
+    @Autowired
+    public SpidCSVService(SpidRepository repository){
+        this.repository = repository;
+    }
 
     public int[] save(MultipartFile file){
 
