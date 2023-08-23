@@ -8,6 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Repository
 public interface SpidRepository extends CrudRepository<Spid,Long> {
+
     void save(MultipartFile file);
 
     Spid findBySpid(String spId);
