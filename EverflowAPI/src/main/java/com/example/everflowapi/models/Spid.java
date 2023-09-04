@@ -13,7 +13,7 @@ public class Spid {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "_id")
+    @Column(name = "_id",columnDefinition = "int")
     private long id;
 
 
@@ -199,5 +199,25 @@ public class Spid {
 
     public void setMeterReadFrequency(int meterReadFrequency) {
         this.meterReadFrequency = meterReadFrequency;
+    }
+
+    @Override
+    public String toString() {
+        return "Spid{" +
+                "id=" + id +
+                ", spidList=" + spidList +
+                ", spid='" + spid + '\'' +
+                ", meterSerial='" + meterSerial + '\'' +
+                ", meterManufacturer='" + meterManufacturer + '\'' +
+                ", meterSewageSize=" + meterSewageSize +
+                ", meterWaterSize=" + meterWaterSize +
+                ", yearlyVolumeEstimate=" + yearlyVolumeEstimate +
+                ", meterType=" + meterType +
+                ", returnToSewer=" + returnToSewer +
+                ", generalSPID='" + generalSPID + '\'' +
+                ", numberOfReadDigits=" + numberOfReadDigits +
+                ", meterLocationDescription='" + meterLocationDescription + '\'' +
+                ", meterReadFrequency=" + meterReadFrequency +
+                '}';
     }
 }

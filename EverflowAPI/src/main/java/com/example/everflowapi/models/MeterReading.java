@@ -13,7 +13,7 @@ public class MeterReading {
     @Column(name = "_id")
     private int id;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "spid" ,referencedColumnName = "spid")
     private Spid spid;
 
@@ -35,7 +35,7 @@ public class MeterReading {
     @Column(name = "Rollover")
     private Boolean rollover;
 
-    @Column(name = "ReadType")
+    @Column(name = "ReadType",columnDefinition = "char")
     private String readType;
 
     @Column(name = "GeneralSPID")
