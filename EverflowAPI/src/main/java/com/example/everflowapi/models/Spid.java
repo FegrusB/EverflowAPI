@@ -11,6 +11,8 @@ import java.util.List;
 @Table(name = "spids")
 public class Spid {
 
+    private static int batchCounter = 0;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "_id",columnDefinition = "int")
@@ -219,5 +221,14 @@ public class Spid {
                 ", meterLocationDescription='" + meterLocationDescription + '\'' +
                 ", meterReadFrequency=" + meterReadFrequency +
                 '}';
+    }
+
+    public static int getBatchCounter() {
+        return batchCounter;
+    }
+    public static int getBatchCounterInc() {
+        int old = batchCounter;
+        batchCounter++;
+        return old;
     }
 }

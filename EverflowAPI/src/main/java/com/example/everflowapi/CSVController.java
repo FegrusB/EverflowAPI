@@ -1,6 +1,7 @@
 package com.example.everflowapi;
 
 import com.example.everflowapi.Batch.JobFactory;
+import com.example.everflowapi.models.Spid;
 import com.example.everflowapi.services.CSVFactory;
 import org.springframework.batch.core.JobParameters;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +30,7 @@ public class CSVController {
     @PostMapping("/spid/upload")
     public void uploadSpids(@RequestParam("file")MultipartFile file) throws Exception{
 
-        File diskFile = new File(file.getName()+ Math.floor( Math.random() * 10) + ".csv");
+        File diskFile = new File(file.getName()+ Spid.getBatchCounterInc() + ".csv");
         diskFile.createNewFile();
         file.transferTo(diskFile.getAbsoluteFile());
         jobFactory.runJob(diskFile,UploadType.SPID);

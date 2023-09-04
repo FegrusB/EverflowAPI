@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 @Component
@@ -28,25 +29,14 @@ public class JobCompletionNotificationListener implements JobExecutionListener {
     @Override
     public void afterJob(JobExecution jobExecution) {
         if(jobExecution.getStatus() == BatchStatus.COMPLETED) {
-            log.info("!!! JOB FINISHED! Time to verify the results");
+            ArrayList<StepExecution> steps = new ArrayList<>(jobExecution.getStepExecutions());
 
-            Collection<StepExecution> steps = jobExecution.getStepExecutions();
+            log.info("JOB FINISHED");
+            log.info(steps.get(0).getSummary());
 
-            jdbcTemplate.query("SELECT * FROM spids WHERE ",
-                    (rs, row) -> new Spid(
-                            rs.getString(1),
-                            rs.getString(2),
-                            rs.getString(3),
-                            rs.getInt(4),
-                            rs.getInt(5),
-                            rs.getFloat(6),
-                            rs.getBoolean(7),
-                            rs.getInt(8),
-                            rs.getString(9),
-                            rs.getInt(10),
-                            rs.getString(11),
-                            rs.getInt(12))
-            ).forEach(person -> log.info("Found <{{}}> in the database.", person));
+
+
+
         }
     }
 }

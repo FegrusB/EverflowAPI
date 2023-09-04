@@ -8,6 +8,9 @@ import java.sql.Timestamp;
 @Entity
 @Table(name = "meterReadings")
 public class MeterReading {
+
+   private static int batchCounter;
+
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "_id")
@@ -147,5 +150,12 @@ public class MeterReading {
     public void setGeneralSpid(String generalSpid) {
         this.generalSpid = generalSpid;
     }
-
+    public static int getBatchCounter() {
+        return batchCounter;
+    }
+    public static int getBatchCounterInc() {
+        int old = batchCounter;
+        batchCounter++;
+        return old;
+    }
 }
